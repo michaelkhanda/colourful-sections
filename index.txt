@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #one {
+            border-style: solid;
+            border-width: medium;
+            height: 5em;
+            width: 100%;
+
+        }
+
+        #two {
+            border-style: solid;
+            height: 30em;
+            float: left;
+            width: 20%;
+
+        }
+
+        #three {
+            border-style: solid;
+            height: 30em;
+
+        }
+
+        #four {
+            height: 5em;
+            border-style: solid;
+            width: 100%;
+
+        }
+
+        h1 {
+            text-align: center;
+
+        }
+
+        #buttons {
+            margin-top: 1em;
+            padding-left: 1em;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="one">
+        <h1>Heading</h1>
+    </div>
+    <div id="two">
+        <h1>Main</h1>
+    </div>
+    <div id="three">
+        <h1>Main Content</h1>
+    </div>
+    <div id="four">
+        <h1>Footer</h1>
+    </div>
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+</body>
+<script>
+    let currentColorPosition = 0;
+    let colors = ['pink', 'purple', 'orange', 'red'];
+
+    function changeColors() {
+        const sections = document.querySelectorAll('div');
+        const usedColors = []; // keep track of colors used so far in an array
+        sections.forEach((section, index) => {
+            let colorPosition = currentColorPosition + index;
+            if (colorPosition >= colors.length) {
+                colorPosition -= colors.length;
+            }
+            let color = colors[colorPosition];
+            while (usedColors.includes(color)) {
+                colorPosition++;
+                if (colorPosition >= colors.length) {
+                    colorPosition -= colors.length;
+                }
+                color = colors[colorPosition];
+            }
+            section.style.backgroundColor = color;
+            usedColors.push(color);
+        });
+    }
+
+    function nextColor() {
+        currentColorPosition++;
+        if (currentColorPosition >= colors.length) {
+            currentColorPosition = 0;
+        }
+        changeColors();
+    }
+
+    function prevColor() {
+        currentColorPosition--;
+        if (currentColorPosition < 0) {
+            currentColorPosition = colors.length - 1;
+        }
+        changeColors();
+    }
+
+    const prevButton = document.getElementById('prevButton');
+    prevButton.addEventListener('click', prevColor);
+
+    const nextButton = document.getElementById('nextButton');
+    nextButton.addEventListener('click', nextColor);
+
+    changeColors(); // initialize the colors
+</script>
+
+
+</html>
